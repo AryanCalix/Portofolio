@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
         // Send email using Resend
         const data = await resend.emails.send({
             from: 'Portfolio Contact <onboarding@resend.dev>', // Use your verified domain later
-            to: ['aliefailfahrezi@gmail.com'],
+            to: ['aryancalix@gmail.com'],
             replyTo: email,
             subject: `Portfolio Contact from ${name}`,
             html: `

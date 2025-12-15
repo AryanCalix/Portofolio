@@ -8,14 +8,18 @@ export function ContactForm() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log("Form submit handler called!");
         setStatus("submitting");
 
-        const formData = new FormData(e.currentTarget);
+        // Store form reference before async operation
+        const form = e.currentTarget;
+        const formData = new FormData(form);
         const data = {
             name: formData.get("name") as string,
             email: formData.get("email") as string,
             message: formData.get("message") as string,
         };
+        console.log("Form data:", data);
 
         try {
             const response = await fetch("/api/contact", {
@@ -31,7 +35,7 @@ export function ContactForm() {
 
             if (response.ok) {
                 setStatus("success");
-                e.currentTarget.reset();
+                form.reset(); // Use stored reference instead of e.currentTarget
                 // Reset after 3 seconds
                 setTimeout(() => setStatus("idle"), 3000);
             } else {
