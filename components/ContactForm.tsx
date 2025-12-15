@@ -26,12 +26,16 @@ export function ContactForm() {
                 body: JSON.stringify(data),
             });
 
+            const result = await response.json();
+            console.log("API Response:", response.status, result);
+
             if (response.ok) {
                 setStatus("success");
                 e.currentTarget.reset();
                 // Reset after 3 seconds
                 setTimeout(() => setStatus("idle"), 3000);
             } else {
+                console.error("API Error:", result);
                 setStatus("error");
                 setTimeout(() => setStatus("idle"), 3000);
             }
