@@ -4,17 +4,42 @@ import { useState } from "react";
 import { Send } from "lucide-react";
 
 export function ContactForm() {
-    const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+    const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setStatus("submitting");
-        // Simulate API call
-        setTimeout(() => {
-            setStatus("success");
-            // Reset after 3 seconds
+
+        const formData = new FormData(e.currentTarget);
+        const data = {
+            name: formData.get("name") as string,
+            email: formData.get("email") as string,
+            message: formData.get("message") as string,
+        };
+
+        try {
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+                setStatus("success");
+                e.currentTarget.reset();
+                // Reset after 3 seconds
+                setTimeout(() => setStatus("idle"), 3000);
+            } else {
+                setStatus("error");
+                setTimeout(() => setStatus("idle"), 3000);
+            }
+        } catch (error) {
+            console.error("Error submitting form:", error);
+            setStatus("error");
             setTimeout(() => setStatus("idle"), 3000);
-        }, 1500);
+        }
     };
 
     return (
@@ -26,6 +51,7 @@ export function ContactForm() {
                 <input
                     type="text"
                     id="name"
+                    name="name"
                     required
                     className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
                     placeholder="Your name"
@@ -38,6 +64,7 @@ export function ContactForm() {
                 <input
                     type="email"
                     id="email"
+                    name="email"
                     required
                     className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
                     placeholder="your@email.com"
@@ -49,6 +76,7 @@ export function ContactForm() {
                 </label>
                 <textarea
                     id="message"
+                    name="message"
                     rows={5}
                     required
                     className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none"
@@ -64,6 +92,8 @@ export function ContactForm() {
                     "Sending..."
                 ) : status === "success" ? (
                     "Message Sent!"
+                ) : status === "error" ? (
+                    "Failed to Send. Try Again."
                 ) : (
                     <>
                         Send Message <Send className="h-4 w-4" />
