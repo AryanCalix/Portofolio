@@ -27,7 +27,7 @@ export default function ContactPage() {
                             </div>
                             <div>
                                 <h3 className="font-semibold">Email Me</h3>
-                                <p className="text-gray-500 dark:text-gray-400">contact@aryancalix.dev</p>
+                                <p className="text-gray-500 dark:text-gray-400">aliefailfahrezi@gmail.com</p>
                             </div>
                         </div>
 
@@ -37,7 +37,7 @@ export default function ContactPage() {
                             </div>
                             <div>
                                 <h3 className="font-semibold">Location</h3>
-                                <p className="text-gray-500 dark:text-gray-400">Digital Nomad (Remote)</p>
+                                <p className="text-gray-500 dark:text-gray-400">Indonesia</p>
                             </div>
                         </div>
                     </div>
