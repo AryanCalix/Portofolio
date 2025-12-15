@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import CodeRainBackground from "@/components/CodeRainBackground";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
+          <CodeRainBackground density={0.9} speed={1.0} />
           <main className="flex-grow pt-16">
             {children}
           </main>

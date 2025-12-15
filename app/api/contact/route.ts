@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
 
         // Send email using Resend
         const data = await resend.emails.send({
-            from: 'Portfolio Contact <contact@arcgroup.com>',
+            from: 'Portfolio Contact <onboarding@resend.dev>',
             to: ['aryancalix@gmail.com'],
             replyTo: email,
             subject: `Portfolio Contact from ${name}`,
@@ -41,14 +41,21 @@ export async function POST(request: NextRequest) {
             `,
         });
 
+        console.log('Email sent successfully:', data);
         return NextResponse.json(
             { message: 'Email sent successfully', data },
             { status: 200 }
         );
     } catch (error) {
         console.error('Error sending email:', error);
+        // Log detailed error information
+        if (error instanceof Error) {
+            console.error('Error name:', error.name);
+            console.error('Error message:', error.message);
+            console.error('Error stack:', error.stack);
+        }
         return NextResponse.json(
-            { error: 'Failed to send email' },
+            { error: 'Failed to send email', details: error instanceof Error ? error.message : 'Unknown error' },
             { status: 500 }
         );
     }
