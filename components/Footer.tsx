@@ -5,7 +5,7 @@ export function Footer() {
         <footer className="w-full py-8 mt-auto border-t border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-black/50 backdrop-blur-sm transition-colors">
             <div className="max-w-5xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div className="text-sm text-gray-500 dark:text-gray-400">
-                    © {new Date().getFullYear()} AryanCalix. All rights reserved.
+                    © {new Date().getFullYear()} ArC Group. All rights reserved.
                 </div>
 
                 <div className="flex space-x-6">
